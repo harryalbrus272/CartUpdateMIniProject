@@ -10,7 +10,33 @@ export default class CartItem extends Component {
       qty: 1,
       img: "",
     };
+    //This binding can be avoided by the arrow function
+    //this.increaseQuantity = this.increaseQuantity.bind(this);
   }
+
+  increaseQuantity = () => {
+    console.log("This is the increase test", this.state);
+    //Shallow merging in place with the state variable
+    this.setState({
+      qty: this.state.qty + 1,
+    });
+  };
+  decreaseQuantity = () => {
+    console.log("This is the decrease test", this.state);
+    if (this.state.qty > 0)
+    //If previous state is required then follow this form
+      this.setState((previous) => {
+        return {
+          qty: previous.qty - 1,
+        };
+      });
+  };
+  emptyQuantity = () => {
+    console.log("This is the empty test", this.state);
+    this.setState({
+      qty: 0,
+    });
+  };
 
   render() {
     const { price, title, qty, img } = this.state;
@@ -28,16 +54,19 @@ export default class CartItem extends Component {
               alt="increase"
               className="action-icons"
               src="https://as2.ftcdn.net/jpg/01/26/10/59/500_F_126105961_6vHCTRX2cPOnQTBvx9OSAwRUapYTEmYA.jpg"
+              onClick={this.increaseQuantity}
             />
             <img
               alt="decrease"
               className="action-icons"
               src="https://as2.ftcdn.net/jpg/03/30/24/99/500_F_330249927_k8oy0p4zZqSAdxd1jxlhB0ZPT3fGLpjw.jpg"
+              onClick={this.decreaseQuantity}
             />
             <img
               alt="delete"
               className="action-icons"
               src="https://as2.ftcdn.net/jpg/00/98/26/11/500_F_98261175_Sv69O3rZsHApYkjAdrWbgQixYHwyZyOr.jpg"
+              onClick={this.emptyQuantity.bind(this)}
             />
           </div>
         </div>
