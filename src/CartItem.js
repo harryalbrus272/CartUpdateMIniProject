@@ -53,7 +53,8 @@ export default class CartItem extends Component {
   };
 
   render() {
-    const { price, title, qty, img } = this.state;
+    const { price, title, qty, img } = this.props.product;
+    console.log("this.props", this.props);
     return (
       <div className="cart-item">
         <div className="left-block">
