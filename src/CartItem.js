@@ -15,27 +15,41 @@ export default class CartItem extends Component {
   }
 
   increaseQuantity = () => {
-    console.log("This is the increase test", this.state);
     //Shallow merging in place with the state variable
-    this.setState({
-      qty: this.state.qty + 1,
-    });
+    //Batching will take place here to bundle the setState calls in a single call. The last change will persist eventually.
+    this.setState(
+      {
+        qty: this.state.qty + 1,
+      },
+      () => {
+        console.log("This is the increase test", this.state);
+      }
+    );
   };
   decreaseQuantity = () => {
-    console.log("This is the decrease test", this.state);
     if (this.state.qty > 0)
-    //If previous state is required then follow this form
-      this.setState((previous) => {
-        return {
-          qty: previous.qty - 1,
-        };
-      });
+      //If previous state is required then follow this form
+      this.setState(
+        (previous) => {
+          return {
+            qty: previous.qty - 1,
+          };
+        },
+        () => {
+          //this callback function is called while the setState is processing the state change asynchronously
+          console.log("This is the decrease test", this.state);
+        }
+      );
   };
   emptyQuantity = () => {
-    console.log("This is the empty test", this.state);
-    this.setState({
-      qty: 0,
-    });
+    this.setState(
+      {
+        qty: 0,
+      },
+      () => {
+        console.log("This is the empty test", this.state);
+      }
+    );
   };
 
   render() {
