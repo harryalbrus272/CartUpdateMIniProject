@@ -1,11 +1,11 @@
-import CartItem from './CartItem';
+import Cart from './Cart';
 function App() {
   const name = 'Shashwat Kumar Singh';
   const isLoggedIn = true;
   return (
     <div className="App">
       <h1>Cart</h1>
-      <CartItem />
+      <Cart />
     </div>
   );
 }
