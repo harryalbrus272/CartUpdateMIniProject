@@ -48,12 +48,13 @@ export default class Cart extends Component {
     }
   };
   handleEmptyQuantity = (product) => {
-    console.log("Heyy please empty the quantity of the", product.title);
+    console.log("Heyy please empty the quantity of the");
     const { products } = this.state;
     const index = products.indexOf(product);
-    products[index].qty = 0;
+    const items = products.filter((_, ind) => ind !== index);
+    console.log(items);
     this.setState({
-      products,
+      products: items,
     });
   };
   render() {
