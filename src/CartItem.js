@@ -54,6 +54,7 @@ export default class CartItem extends Component {
 
   render() {
     const { price, title, qty, img } = this.props.product;
+    const { product, onIncreaseQuantity, onDecreaseQuantity, onEmptyCart } = this.props;
     console.log("this.props", this.props);
     return (
       <div className="cart-item">
@@ -69,19 +70,19 @@ export default class CartItem extends Component {
               alt="increase"
               className="action-icons"
               src="https://as2.ftcdn.net/jpg/01/26/10/59/500_F_126105961_6vHCTRX2cPOnQTBvx9OSAwRUapYTEmYA.jpg"
-              onClick={this.increaseQuantity}
+              onClick={() => onIncreaseQuantity(product)}
             />
             <img
               alt="decrease"
               className="action-icons"
               src="https://as2.ftcdn.net/jpg/03/30/24/99/500_F_330249927_k8oy0p4zZqSAdxd1jxlhB0ZPT3fGLpjw.jpg"
-              onClick={this.decreaseQuantity}
+              onClick={() => onDecreaseQuantity(product)}
             />
             <img
               alt="delete"
               className="action-icons"
               src="https://as2.ftcdn.net/jpg/00/98/26/11/500_F_98261175_Sv69O3rZsHApYkjAdrWbgQixYHwyZyOr.jpg"
-              onClick={this.emptyQuantity.bind(this)}
+              onClick={() => onEmptyCart(product)}
             />
           </div>
         </div>
