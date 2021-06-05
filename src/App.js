@@ -1,38 +1,61 @@
 import React, { Component } from "react";
 import Cart from "./Cart";
 import Navbar from "./Navbar";
+import firebase from "firebase";
 export default class App extends Component {
   constructor() {
     super();
     this.state = {
       products: [
-        {
-          price: 999,
-          title: "Phone",
-          qty: 1,
-          img: "https://images.unsplash.com/photo-1520923642038-b4259acecbd7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1306&q=80",
-        },
-        {
-          price: 4000,
-          title: "Laptop",
-          qty: 1,
-          img: "https://images.unsplash.com/photo-1504707748692-419802cf939d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1330&q=80",
-        },
-        {
-          price: 99,
-          title: "Watch",
-          qty: 1,
-          img: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
-        },
+        // {
+        //   price: 999,
+        //   title: "Phone",
+        //   qty: 1,
+        //   img: "https://images.unsplash.com/photo-1520923642038-b4259acecbd7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1306&q=80",
+        // },
+        // {
+        //   price: 4000,
+        //   title: "Laptop",
+        //   qty: 1,
+        //   img: "https://images.unsplash.com/photo-1504707748692-419802cf939d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1330&q=80",
+        // },
+        // {
+        //   price: 99,
+        //   title: "Watch",
+        //   qty: 1,
+        //   img: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
+        // },
       ],
+      loading: true,
     };
   }
+
+  componentDidMount() {
+    firebase
+      .firestore()
+      .collection("products")
+      .get()
+      .then((snapshot) => {
+        console.log(snapshot);
+        snapshot.docs.map((doc) => console.log(doc.data()));
+        const products = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          data["id"] = doc.id;
+          return data;
+        });
+        this.setState({ 
+          products, 
+          loading: false, 
+        });
+      });
+  }
+
   handleIncreaseQuantity = (product) => {
     const { products } = this.state;
     const index = products.indexOf(product);
     products[index].qty += 1;
     this.setState({
-      products,
+      products: products,
     });
   };
   handleDecreaseQuantity = (product) => {
@@ -41,7 +64,7 @@ export default class App extends Component {
     if (products[index].qty > 0) {
       products[index].qty -= 1;
       this.setState({
-        products,
+        products: products,
       });
     }
   };
@@ -70,17 +93,18 @@ export default class App extends Component {
     return price;
   };
   render() {
-    const { products } = this.state;
+    const { products, loading } = this.state;
     return (
       <div className="App">
         <Navbar count={this.getCartCount()} />
         <h1>Cart</h1>
-        <Cart
+        {!loading && <Cart
           products={products}
           onIncreaseQuantity={this.handleIncreaseQuantity}
           onDecreaseQuantity={this.handleDecreaseQuantity}
           onEmptyCart={this.handleEmptyQuantity}
-        />
+        />}
+        {loading && <h1>Loading...</h1>}
         <div style={{ fontSize: 20, padding: 10 }}>
           TOTAL: {this.getCartTotal()}
         </div>

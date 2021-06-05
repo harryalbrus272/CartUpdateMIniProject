@@ -7,9 +7,9 @@ export default class Cart extends Component {
       this.props;
     return (
       <div className="cart">
-        {products.map((item, index) => (
+        {products.map((item) => (
           <CartItem
-            key={index}
+            key={item.id}
             product={item}
             onIncreaseQuantity={onIncreaseQuantity}
             onDecreaseQuantity={onDecreaseQuantity}

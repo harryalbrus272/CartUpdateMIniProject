@@ -47,15 +47,19 @@ export default class CartItem extends Component {
   //         qty: 0,
   //       },
   //       () => {
-  //         console.log("This is the empty test", this.state);
+  //           ("This is the empty test", this.state);
   //       }
   //     );
   //   };
 
   render() {
     const { price, title, qty, img } = this.props.product;
-    const { product, onIncreaseQuantity, onDecreaseQuantity, onEmptyCart } =
-      this.props;
+    const { 
+        product,
+        onIncreaseQuantity,
+        onDecreaseQuantity,
+        onEmptyCart
+    } = this.props;
     return (
       <div className="cart-item">
         <div className="left-block">
