@@ -1,6 +1,6 @@
 import React from "react";
 
-const Navbar = (props) => {
+const Navbar = ({ count }) => {
   return (
     <div style={styles.nav}>
       <div style={styles.cartIconContainer}>
@@ -9,7 +9,7 @@ const Navbar = (props) => {
           src="https://image.flaticon.com/icons/png/512/34/34568.png"
           alt="cart"
         />
-        <span style={styles.cartCount}>3</span>
+        <span style={styles.cartCount}>{count}</span>
       </div>
     </div>
   );
