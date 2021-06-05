@@ -10,25 +10,24 @@ export default class App extends Component {
           price: 999,
           title: "Phone",
           qty: 1,
-          img: "",
+          img: "https://images.unsplash.com/photo-1520923642038-b4259acecbd7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1306&q=80",
         },
         {
           price: 4000,
           title: "Laptop",
           qty: 1,
-          img: "",
+          img: "https://images.unsplash.com/photo-1504707748692-419802cf939d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1330&q=80",
         },
         {
           price: 99,
           title: "Watch",
           qty: 1,
-          img: "",
+          img: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
         },
       ],
     };
   }
   handleIncreaseQuantity = (product) => {
-    console.log("Heyy please increase the quantity of the", product.title);
     const { products } = this.state;
     const index = products.indexOf(product);
     products[index].qty += 1;
@@ -37,7 +36,6 @@ export default class App extends Component {
     });
   };
   handleDecreaseQuantity = (product) => {
-    console.log("Heyy please decrease the quantity of the", product.title);
     const { products } = this.state;
     const index = products.indexOf(product);
     if (products[index].qty > 0) {
@@ -48,11 +46,9 @@ export default class App extends Component {
     }
   };
   handleEmptyQuantity = (product) => {
-    console.log("Heyy please empty the quantity of the");
     const { products } = this.state;
     const index = products.indexOf(product);
     const items = products.filter((_, ind) => ind !== index);
-    console.log(items);
     this.setState({
       products: items,
     });

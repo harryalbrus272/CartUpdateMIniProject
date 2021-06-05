@@ -56,11 +56,10 @@ export default class CartItem extends Component {
     const { price, title, qty, img } = this.props.product;
     const { product, onIncreaseQuantity, onDecreaseQuantity, onEmptyCart } =
       this.props;
-    console.log("this.props", this.props);
     return (
       <div className="cart-item">
         <div className="left-block">
-          <img style={styles.image} src="" alt="" />
+          <img style={styles.image} src={img} alt="" />
         </div>
         <div className="right-block">
           <div style={{ fontSize: 25 }}>{title}</div>
