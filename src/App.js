@@ -57,6 +57,7 @@ export default class App extends Component {
       products: items,
     });
   };
+  //Function to calculate the total number of cart items
   getCartCount = () => {
     const { products } = this.state;
     let count = 0;
@@ -64,7 +65,14 @@ export default class App extends Component {
       count += product.qty;
     });
     return count;
-  }
+  };
+  //Function to calculate the total price of the cart
+  getCartTotal = () => {
+    const { products } = this.state;
+    let price = 0;
+    products.map((product) => (price = price + product.qty * product.price));
+    return price;
+  };
   render() {
     const { products } = this.state;
     return (
@@ -77,6 +85,9 @@ export default class App extends Component {
           onDecreaseQuantity={this.handleDecreaseQuantity}
           onEmptyCart={this.handleEmptyQuantity}
         />
+        <div style={{ fontSize: 20, padding: 10 }}>
+          TOTAL: {this.getCartTotal()}
+        </div>
       </div>
     );
   }

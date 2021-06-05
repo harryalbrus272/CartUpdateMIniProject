@@ -3,7 +3,8 @@ import CartItem from "./CartItem";
 
 export default class Cart extends Component {
   render() {
-    const { products, onIncreaseQuantity, onDecreaseQuantity, onEmptyCart } = this.props;
+    const { products, onIncreaseQuantity, onDecreaseQuantity, onEmptyCart } =
+      this.props;
     return (
       <div className="cart">
         {products.map((item, index) => (
