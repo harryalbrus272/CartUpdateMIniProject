@@ -65,28 +65,59 @@ export default class App extends Component {
   handleIncreaseQuantity = (product) => {
     const { products } = this.state;
     const index = products.indexOf(product);
-    products[index].qty += 1;
-    this.setState({
-      products: products,
-    });
+    //Now we wil increase the quantity in the firestore
+    // products[index].qty += 1;
+    // this.setState({
+    //   products: products,
+    // });
+
+    //Getting the reference to the product
+    const docRef = this.db.collection("products").doc(products[index].id);
+    docRef
+      .update({
+        qty: products[index].qty + 1,
+      })
+      .then(() => {
+        console.log("Updated succesfully");
+      })
+      .catch((err) => console.log(err));
   };
   handleDecreaseQuantity = (product) => {
     const { products } = this.state;
     const index = products.indexOf(product);
     if (products[index].qty > 0) {
-      products[index].qty -= 1;
-      this.setState({
-        products: products,
-      });
+      // products[index].qty -= 1;
+      // this.setState({
+      //   products: products,
+      // });
+
+      //Adding firebase code to decrease the quantity on the database
+      //Getting the reference to the product
+      const docRef = this.db.collection("products").doc(products[index].id);
+      docRef
+        .update({
+          qty: products[index].qty - 1,
+        })
+        .then(() => {
+          console.log("Updated succesfully");
+        })
+        .catch((err) => console.log(err));
     }
   };
   handleEmptyQuantity = (product) => {
     const { products } = this.state;
     const index = products.indexOf(product);
-    const items = products.filter((_, ind) => ind !== index);
-    this.setState({
-      products: items,
-    });
+    // const items = products.filter((_, ind) => ind !== index);
+    // this.setState({
+    //   products: items,
+    // });
+    const docRef = this.db.collection("products").doc(products[index].id);
+    docRef
+      .delete()
+      .then(() => {
+        console.log("Updated succesfully");
+      })
+      .catch((err) => console.log(err));
   };
   //Function to calculate the total number of cart items
   getCartCount = () => {
