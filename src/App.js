@@ -31,22 +31,38 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    // firebase
+    //   .firestore()
+    //   .collection("products")
+    //   .get()
+    //   .then((snapshot) => {
+    //     console.log(snapshot);
+    //     snapshot.docs.map((doc) => console.log(doc.data()));
+    //     const products = snapshot.docs.map((doc) => {
+    //       const data = doc.data();
+    //       data["id"] = doc.id;
+    //       return data;
+    //     });
+    //     this.setState({
+    //       products,
+    //       loading: false,
+    //     });
+    //   });
+    //Listener listening to the updates in the database
     firebase
       .firestore()
       .collection("products")
-      .get()
-      .then((snapshot) => {
+      .onSnapshot((snapshot) => {
         console.log(snapshot);
-        snapshot.docs.map((doc) => console.log(doc.data()));
+        snapshot.docs.map((doc) => (
+          console.log(doc.data)
+        ));
         const products = snapshot.docs.map((doc) => {
           const data = doc.data();
           data["id"] = doc.id;
           return data;
         });
-        this.setState({ 
-          products, 
-          loading: false, 
-        });
+        this.setState({ products, loading: false });
       });
   }
 
@@ -98,12 +114,14 @@ export default class App extends Component {
       <div className="App">
         <Navbar count={this.getCartCount()} />
         <h1>Cart</h1>
-        {!loading && <Cart
-          products={products}
-          onIncreaseQuantity={this.handleIncreaseQuantity}
-          onDecreaseQuantity={this.handleDecreaseQuantity}
-          onEmptyCart={this.handleEmptyQuantity}
-        />}
+        {!loading && (
+          <Cart
+            products={products}
+            onIncreaseQuantity={this.handleIncreaseQuantity}
+            onDecreaseQuantity={this.handleDecreaseQuantity}
+            onEmptyCart={this.handleEmptyQuantity}
+          />
+        )}
         {loading && <h1>Loading...</h1>}
         <div style={{ fontSize: 20, padding: 10 }}>
           TOTAL: {this.getCartTotal()}
