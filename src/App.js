@@ -50,16 +50,21 @@ export default class App extends Component {
     //     });
     //   });
     //Listener listening to the updates in the database
-    this.db.collection("products").onSnapshot((snapshot) => {
-      console.log(snapshot);
-      snapshot.docs.map((doc) => console.log(doc.data));
-      const products = snapshot.docs.map((doc) => {
-        const data = doc.data();
-        data["id"] = doc.id;
-        return data;
+    this.db
+      .collection("products")
+      .where("price", "<=", 999)
+      .where("title", "==", "Bag")
+      .orderBy("price", "asc")
+      .onSnapshot((snapshot) => {
+        console.log(snapshot);
+        snapshot.docs.map((doc) => console.log(doc.data));
+        const products = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          data["id"] = doc.id;
+          return data;
+        });
+        this.setState({ products, loading: false });
       });
-      this.setState({ products, loading: false });
-    });
   }
 
   handleIncreaseQuantity = (product) => {
