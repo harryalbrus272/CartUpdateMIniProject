@@ -52,8 +52,7 @@ export default class App extends Component {
     //Listener listening to the updates in the database
     this.db
       .collection("products")
-      .where("price", "<=", 999)
-      .where("title", "==", "Bag")
+      .where("price", "<", 999)
       .orderBy("price", "asc")
       .onSnapshot((snapshot) => {
         console.log(snapshot);
